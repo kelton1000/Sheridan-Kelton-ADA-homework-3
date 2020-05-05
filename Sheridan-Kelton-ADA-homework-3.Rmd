@@ -7,24 +7,27 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(ggplot2)
 
-f <- file.choose()
-d <- read.csv("/Users/kelton/Desktop/ADA/KamilarAndCooper.csv")
-d
-
-ggplot(data = d, aes(y = MaxLongevity_m, x = Brain_Size_Species_Mean)) + 
-  geom_point() + geom_smooth(method = "lm")
 ```
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
 summary(cars)
+library(ggplot2)
+
+d <- read.csv("/Users/kelton/Desktop/ADA/KamilarAndCooper.csv")
+d
+
+ggplot(data = d, aes(y = MaxLongevity_m, x = Brain_Size_Species_Mean)) + 
+  geom_point() + geom_smooth(method = "lm", se = FALSE)
+
+m <- lm(formula = MaxLongevity_m ~ Brain_Size_Species_Mean, data = d)
+m2 <- lm(formula = log(MaxLongevity_m) ~ log(Brain_Size_Species_Mean), data = d)
+confint(m, level = 0.90)
+confint(m2, level = 0.90)
+
 ```
 
 ## Including Plots
